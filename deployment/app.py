@@ -1,15 +1,27 @@
 from flask import Flask, request, render_template, jsonify
 import torch
+import boto3
+import io
 from torchvision import transforms
 from PIL import Image
-import io
 import timm
 
 app = Flask(__name__)
 
+# Initialize a session using Amazon S3
+s3 = boto3.client('s3')
+
+# Specify the bucket name and model key
+bucket_name = 'your-bucket-name'
+model_key = 'path/to/your/model.pth'
+
+# Download the model file from S3
+response = s3.get_object(Bucket=bucket_name, Key=model_key)
+model_file = io.BytesIO(response['Body'].read())
+
 # Load the model
 model = timm.create_model('swin_tiny_patch4_window7_224', pretrained=True, num_classes=5)
-model.load_state_dict(torch.load('model.pth'))
+model.load_state_dict(torch.load(model_file))
 model.eval()
 
 # Image transformations
