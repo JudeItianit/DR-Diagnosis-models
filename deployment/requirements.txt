@@ -6,3 +6,5 @@ scikit-learn
 matplotlib
 seaborn
 numpy
+boto3
+Pillow
