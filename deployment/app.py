@@ -13,7 +13,7 @@ s3 = boto3.client('s3')
 
 # Specify the bucket name and model key
 bucket_name = 'mlegacyshop-media'
-model_key = 'https://mlegacyshop-media.s3.eu-north-1.amazonaws.com/models/model.pth'
+model_key = 'models/model.pth'
 
 # Download the model file from S3
 response = s3.get_object(Bucket=bucket_name, Key=model_key)
